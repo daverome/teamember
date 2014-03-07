@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
   <script type="text/x-handlebars">
     <h2>Welcome to Ember.js</h2>
 
@@ -25,10 +26,15 @@
   {{#link-to 'add'}}Add Location{{/link-to}}
   </script>
 
+  <div id="map-view"></div>
+
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
   <script src="js/libs/ember-1.4.0.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
   <script src="js/app.js"></script>
+  <script src="js/map.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>
 

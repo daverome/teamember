@@ -2,3 +2,8 @@
 .ember-application {
     margin: 20px;
 }
+
+#map-view {
+  height: 400px;
+  width: 100%;
+}
