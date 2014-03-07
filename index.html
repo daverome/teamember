@@ -13,12 +13,16 @@
     {{outlet}}
   </script>
 
+
+  <script type="text/x-handlebars" id="add">
+  Add
+
+  {{#link-to 'index'}}Back{{/link-to}}
+  </script>
+
   <script type="text/x-handlebars" id="index">
-    <ul>
-    {{#each item in model}}
-      <li>{{item}}</li>
-    {{/each}}
-    </ul>
+  MAP
+  {{#link-to 'add'}}Add Location{{/link-to}}
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
@@ -27,5 +31,7 @@
   <script src="js/app.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>
+
+  <script src="http://127.0.0.1:35729/livereload.js?ext=Chrome&amp;extver=2.0.9"></script>
 </body>
 </html>
