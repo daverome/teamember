@@ -1,5 +1,8 @@
 App = Ember.Application.create();
 
+//***************************************************************************
+// Routes
+//***************************************************************************
 App.Router.map(function() {
   // put your routes here
   //this.resource('add', {path: '/add'});
@@ -16,5 +19,21 @@ App.IndexRoute = Ember.Route.extend({
   }
 });
 
+//***************************************************************************
+// Controllers
+//***************************************************************************
+App.AddController = Ember.ObjectController.extend({
+
+    actions: {
+
+        getCoordinates: function(){
+
+            console.log( 'Coordinates' );
+            navigator.geolocation.getCurrentPosition(function(position) {
+                console.log(position);
+            });
+        }
+    }
+});
 // var map = new App.Map();
 // map.draw();
