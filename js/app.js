@@ -25,15 +25,26 @@ App.IndexRoute = Ember.Route.extend({
 App.AddController = Ember.ObjectController.extend({
 
     actions: {
-
         getCoordinates: function(){
 
+            var newLongitude = this.get('newLongitude');
+
+            console.log( arguments );
             console.log( 'Coordinates' );
-            navigator.geolocation.getCurrentPosition(function(position) {
-                console.log(position);
-            });
+            //navigator.geolocation.getCurrentPosition(function(position) {
+            //    console.log(position);
+            //});
         }
     }
 });
-// var map = new App.Map();
-// map.draw();
+
+
+//***************************************************************************
+// Model
+//***************************************************************************
+App.Location = DS.Model.extend({
+    name: DS.attr( 'string' ),
+    latitude: DS.attr( 'number' ),
+    longitude: DS.attr( 'number' ),
+    added: DS.attr( 'date' )
+});

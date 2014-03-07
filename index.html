@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Ember Starter Kit</title>
+  <title>PLAYCES</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,7 +16,6 @@
 
   <script type="text/x-handlebars" id="add">
     <h2>Add Location</h2>
-
     <p>
       <input name="location" id="location" placeholder="Location" type="text">
     </p>
@@ -25,22 +24,23 @@
     </p>
     <p>
       <!-- <input name="longitude" id="longitude" placeholder="Longitude" type="text"> -->
-      {{input type="text" name="longitude" id="longitude" placeholder="Longitude" value=newLongitude}}
+      {{input type="text" placeholder="Longitude" value=newLongitude}}
     </p>
 
     <button {{action 'getCoordinates'}}>Get Coordinates</button>
+
     {{#link-to 'index'}}Back{{/link-to}}
   </script>
 
   <script type="text/x-handlebars" id="index">
-  MAP
-  {{#link-to 'add'}}Add Location{{/link-to}}
+    {{#link-to 'add'}}Add Location{{/link-to}}
   </script>
 
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
   <script src="js/libs/ember-1.4.0.js"></script>
+  <script src="js/libs/ember-data.prod.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
   <script src="js/app.js"></script>
