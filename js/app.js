@@ -1,4 +1,6 @@
-App = Ember.Application.create();
+App = Ember.Application.create({
+  LOG_TRANSITIONS: true
+});
 
 //***************************************************************************
 // Routes
@@ -10,7 +12,9 @@ App.Router.map(function() {
 });
 
 App.AddRoute = Ember.Route.extend({
-
+    model: function(){
+        return this.store.find('location');
+    }
 });
 
 App.IndexRoute = Ember.Route.extend({
@@ -26,14 +30,11 @@ App.AddController = Ember.ObjectController.extend({
 
     actions: {
         getCoordinates: function(){
-
-            var newLongitude = this.get('newLongitude');
-
-            console.log( arguments );
-            console.log( 'Coordinates' );
-            //navigator.geolocation.getCurrentPosition(function(position) {
-            //    console.log(position);
-            //});
+            var self = this;
+            navigator.geolocation.getCurrentPosition(function(position) {
+                self.set('newLongitude', position.coords.longitude);
+                self.set('newLatitude', position.coords.latitude);
+            });
         }
     }
 });

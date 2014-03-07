@@ -17,7 +17,7 @@ if ( $is_POST ) {
 
     $data = json_decode( $json );
     if( $data ) {
-        createLocation( $data->item->name, $data->item->latitude, $data->item->longitude );
+        createLocation( $data->location->name, $data->location->latitude, $data->location->longitude );
     }
     exit();
 }
@@ -30,7 +30,7 @@ if ( $is_GET  ) {
         echo json_encode( readLocation( $id ) );
     }
     else {
-        echo json_encode( array( 'items' => readLocation() ) );
+        echo json_encode( array( 'locations' => readLocation() ) );
     }
     exit();
 }
@@ -43,7 +43,7 @@ if ( $is_PUT && $id ) {
 
     $data = json_decode( $json );
     if( $data ) {
-        updateLocation( $data->item->name, $data->item->latitude, $data->item->longitude, $id );
+        updateLocation( $data->item->location, $data->location->latitude, $data->location->longitude, $id );
     }
     exit();
 }
