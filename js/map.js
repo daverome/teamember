@@ -7,6 +7,23 @@ App.Map = (function () {
   center,
   playces;
 
+  drawMarkers = function () {
+    var latlng,
+    marker;
+
+    for (var i = 0; i < playces.length; i++) {
+      latlng =  new google.maps.LatLng(playces[i].location.latitude, playces[i].location.longitude);
+
+      marker = new google.maps.Marker({
+        animation: google.maps.Animation.DROP,
+        map: googleMapsMap,
+        position: latlng
+      });
+    }
+  };
+
+  center = new google.maps.LatLng(42.366604, -71.208291);
+
   playces = [
   {
     name: 'keys',
@@ -16,26 +33,6 @@ App.Map = (function () {
     }
   }
   ];
-
-  drawMarkers = function () {
-    var latlng;
-    for (var i = 0; i < playces.length; i++) {
-      latlng =  new google.maps.LatLng(playces[i].latitude, playces[i].longitude);
-
-      new google.maps.Marker({
-        animation: google.maps.Animation.DROP,
-        icon: {
-          url: 'http://placehold.it/10x10',
-          scaledSize: new google.maps.Size(28, 33)
-        },
-        map: googleMapsMap,
-        position: latlng,
-        title: playces[i].name
-      });
-    }
-  };
-
-  center = new google.maps.LatLng([42.366604, -71.208291]);
 
   var mapOptions = {
     zoom: 15,
