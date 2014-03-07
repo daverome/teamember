@@ -15,3 +15,6 @@ App.IndexRoute = Ember.Route.extend({
     return ['red', 'yellow', 'blue'];
   }
 });
+
+// var map = new App.Map();
+// map.draw();

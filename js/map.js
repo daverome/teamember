@@ -40,8 +40,10 @@ App.Map = (function () {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
 
-  googleMapsMap = new google.maps.Map(document.getElementById('map-view'), mapOptions);
-  drawMarkers(playces);
+  self.draw = function () {
+    googleMapsMap = new google.maps.Map(document.getElementById('map-view'), mapOptions);
+    drawMarkers(playces);
+  };
 
   return self;
-})();
+});
