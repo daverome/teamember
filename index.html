@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PLAYCES</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -9,7 +10,7 @@
 
   <script type="text/x-handlebars">
     <h1>PLAYCES</h1>
-    <div id="map-view"></div>
+    {{view App.MapView contextBinding="content"}}
     {{outlet}}
   </script>
 
@@ -17,7 +18,7 @@
   <script type="text/x-handlebars" id="add">
     <h2>Add Location</h2>
     <p>
-      <input name="location" id="location" placeholder="Location" type="text">
+      {{input type="text" placeholder="Location Name" value=newLocationName}}
     </p>
     <p>
       {{input type="text" placeholder="Longitude" value=newLatitude}}
@@ -26,13 +27,29 @@
       {{input type="text" placeholder="Longitude" value=newLongitude}}
     </p>
 
-    <button {{action 'getCoordinates'}}>Get Coordinates</button>
+    {{#if isSaveable}}
+        <button {{action 'saveLocation'}}>Save Location</button>
+    {{else}}
+        <button {{action 'getCoordinates'}}>Get Coordinates</button>
+    {{/if}}
 
     {{#link-to 'index'}}Back{{/link-to}}
   </script>
 
   <script type="text/x-handlebars" id="index">
     {{#link-to 'add'}}Add Location{{/link-to}}
+
+    {{#each model}}
+        <p>
+            {{name}}<br>
+            {{latitude}}, {{longitude}}
+        </p>
+    {{/each}}
+  </script>
+
+  <script type="text/x-handlebars" id="map">
+  <h3>This is a Map</h3>
+  <div id="map-view"></div>
   </script>
 
 
