@@ -1,0 +1,23 @@
+{{#link-to 'playces'}}&laquo; Back{{/link-to}}
+
+<h2>Add New Playce</h2>
+
+<div class="form-group span8">
+  {{input type="text" placeholder="Playce Name" value=name}}
+</div>
+
+<div class="row">
+  <div class="span4">
+    {{input class=isGettingCoordinates:loading type="text" placeholder="Longitude" value=latitude}}
+  </div>
+  <div class="span4">
+    {{input class=isGettingCoordinates:loading type="text" placeholder="Longitude" value=longitude}}
+  </div>
+  <div class="span4">
+    <button class="button button-secondary" {{bind-attr disabled=isGettingCoordinates}} {{action 'getCoordinates'}}>Get My Coordinates</button>
+  </div>
+</div>
+
+<div class="form-group">
+  <button class="button" {{bind-attr disabled=isNotSaveable}} {{action 'saveLocation'}}>Save Location</button>
+</div>

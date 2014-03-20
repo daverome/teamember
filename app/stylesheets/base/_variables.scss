@@ -1,0 +1,35 @@
+// Colors
+// ---------------------------------------
+
+$green: #D1E886;
+$green-dark: #99CB00;
+$green-light: #EFF7D5;
+
+$gray-darkest: #65666e;
+$gray-darker: #717883;
+$gray-dark: darken(#93a1a7, 5%);
+$gray: #e3e5e6;
+$gray-light: #f1f2f3;
+$gray-lighter: #F8F8F8;
+
+$color-body: #555;
+
+$color-primary: $green-dark;
+$color-primary-light: $green;
+$color-primary-lighter: $green-light;
+
+
+// Fonts
+// ---------------------------------------
+
+$font-stack: "Helvetica Neue", "Arial", sans-serif;
+$font-primary: "Open Sans", $font-stack;
+
+
+// Misc
+// ---------------------------------------
+
+$page-border-radius: 3px;
+$page-h-rhythm: 20px;
+$page-v-rhythm: 20px;
+$page-width: 960px;

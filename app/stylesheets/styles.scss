@@ -1,0 +1,34 @@
+/*
+  Playces CSS
+*/
+
+@charset "UTF-8";
+
+@import "vendor/bourbon/bourbon";
+
+@import "base/reset";
+@import "base/variables";
+@import "base/mixins";
+@import "base/helpers";
+
+@import "base/grid";
+@import "base/typography";
+
+@import "layout/footer";
+@import "layout/form";
+@import "layout/global";
+@import "layout/header";
+@import "layout/section";
+
+@import "component/form/button";
+@import "component/form/input";
+@import "component/form/select";
+@import "component/table";
+
+.map-container {
+  height: 300px;
+
+  img {
+    max-width: none;
+  }
+}

@@ -1,0 +1,46 @@
+.app-header {
+  background: #fff;
+  padding: 10px 0;
+
+  .logo {
+    @include font-size(28);
+    font-weight: bold;
+    text-transform: uppercase;
+
+    span {
+      @include animation(logo-hidden 0.3s, logo-show 0.8s 0.3s);
+      @include inline-block;
+      @include transform(rotate(0deg));
+      max-width: 20px;
+      opacity: 1;
+    }
+  }
+}
+
+@include keyframes (logo-hidden) {
+  0% {
+    @include transform(rotate(270deg) scale(4));
+    max-width: 0;
+    opacity: 0;
+  }
+
+  100% {
+    @include transform(rotate(270deg) scale(4));
+    max-width: 0;
+    opacity: 0;
+  }
+}
+
+@include keyframes (logo-show) {
+  0% {
+    @include transform(rotate(270deg) scale(4));
+    max-width: 0;
+    opacity: 0;
+  }
+
+  100% {
+    @include transform(rotate(0deg) scale(1));
+    max-width: 20px;
+    opacity: 1;
+  }
+}

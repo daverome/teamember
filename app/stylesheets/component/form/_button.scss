@@ -1,0 +1,62 @@
+button {
+  font-family: inherit;
+  font-size: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+.button {
+  @include inline-block;
+  @include box-sizing(border-box);
+  @include transition(background 0.2s, border 0.2s);
+  background: $color-primary;
+  border: 0;
+  border-bottom: 2px solid darken($color-primary, 5%);
+  border-radius: $page-border-radius;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  margin: 0;
+  padding: 4px 10px;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  white-space: nowrap;
+
+  &:hover,
+  &:focus {
+    background: darken($color-primary, 5%);
+    border-color: darken($color-primary, 10%);
+    outline: none;
+    text-decoration: none;
+  }
+
+  &:active {
+    box-shadow: inset 0 2px 5px rgba(#000, 0.1);
+  }
+
+  &.disabled,
+  &[disabled] {
+    @include opacity(0.3);
+    background: $color-primary;
+    border-color: darken($color-primary, 5%);
+    cursor: default;
+  }
+
+  &.button-secondary {
+    background: #bbb;
+    border-bottom-color: darken(#bbb, 10%);
+
+    &:hover,
+    &:focus {
+      background: darken(#bbb, 5%);
+      border-color: darken(#bbb, 20%);
+    }
+
+    &.disabled,
+    &[disabled] {
+      background: #bbb;
+      border-color: darken(#bbb, 10%);
+    }
+  }
+}

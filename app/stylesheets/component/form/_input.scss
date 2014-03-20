@@ -1,0 +1,44 @@
+.input-text,
+#{$all-text-inputs},
+textarea {
+  @include inline-block;
+  @include box-sizing(border-box);
+  @include transition(border 0.2s);
+  border: 0;
+  border-bottom: 2px solid #ddd;
+  border-radius: $page-border-radius;
+  color: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  margin: 0;
+  padding: 6px 10px;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+
+  &:focus {
+    border-bottom-color: $color-primary-light;
+    outline: none;
+  }
+
+  &[disabled] {
+    border-color: $gray-light;
+    color: $gray;
+  }
+}
+
+@include placeholder {
+  color: #999;
+}
+
+::-webkit-outer-spin-button,
+::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+textarea {
+  overflow: auto;
+  max-width: 100%;
+  vertical-align: top;
+}

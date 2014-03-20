@@ -1,0 +1,41 @@
+.table-container {
+  @include vertical-rhythm;
+  border-bottom: 2px solid #eee;
+}
+
+table {
+  @include vertical-rhythm;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+thead {
+  th {
+    background: #eee;
+  }
+}
+
+tbody {
+  th,
+  td {
+    border-left: 2px solid #fafafa;
+
+    &:first-child {
+      border-left: 0;
+    }
+  }
+}
+
+th,
+td {
+  padding: 6px 10px;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  background: #fff;
+}
