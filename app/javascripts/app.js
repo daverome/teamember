@@ -11,13 +11,7 @@ App.Router.map(function () {
   });
 });
 
-App.ApplicationRoute = Ember.Route.extend({
-  model: function () {
-    return this.store.find('location');
-  }
-});
-
-App.IndexRoute = Ember.Route.extend({
+App.PlaycesRoute = Ember.Route.extend({
   model: function () {
     return this.store.find('location');
   }
@@ -25,13 +19,13 @@ App.IndexRoute = Ember.Route.extend({
 
 App.PlaycesIndexRoute = Ember.Route.extend({
   model: function () {
-    return this.store.find('location');
+    return this.modelFor('playces');
   }
 });
 
 App.PlaycesNewRoute = Ember.Route.extend({
-  model: function () {
-    return this.store.find('location');
+  setupController: function (controller, model) {
+    controller.set('content', {});
   }
 });
 
@@ -56,7 +50,7 @@ App.PlayceController = Ember.ObjectController.extend({
   }
 });
 
-App.PlaycesNewController = Ember.ArrayController.extend({
+App.PlaycesNewController = Ember.ObjectController.extend({
   actions: {
     getCoordinates: function () {
       var self = this;
@@ -79,12 +73,10 @@ App.PlaycesNewController = Ember.ArrayController.extend({
 
       newLocation.save();
       this.transitionToRoute('playces');
-
     }
   },
 
   isGettingCoordinates: false,
-
   isSaveable: false,
   isNotSaveable: function () {
     return !this.get('isSaveable');
@@ -111,7 +103,7 @@ App.MapView = Ember.View.extend({
   classNames: ['map-container'],
   didInsertElement: function () {
     var mapOptions = {
-      zoom: 15,
+      zoom: 10,
       center: new google.maps.LatLng(42.366604, -71.208291),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     },

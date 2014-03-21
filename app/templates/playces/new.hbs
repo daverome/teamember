@@ -1,5 +1,3 @@
-{{#link-to 'playces'}}&laquo; Back{{/link-to}}
-
 <h2>Add New Playce</h2>
 
 <div class="form-group span8">
@@ -20,4 +18,5 @@
 
 <div class="form-group">
   <button class="button" {{bind-attr disabled=isNotSaveable}} {{action 'saveLocation'}}>Save Location</button>
+  {{#link-to 'playces'}}Cancel{{/link-to}}
 </div>

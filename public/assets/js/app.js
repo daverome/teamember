@@ -11,13 +11,7 @@ App.Router.map(function () {
   });
 });
 
-App.ApplicationRoute = Ember.Route.extend({
-  model: function () {
-    return this.store.find('location');
-  }
-});
-
-App.IndexRoute = Ember.Route.extend({
+App.PlaycesRoute = Ember.Route.extend({
   model: function () {
     return this.store.find('location');
   }
@@ -25,13 +19,13 @@ App.IndexRoute = Ember.Route.extend({
 
 App.PlaycesIndexRoute = Ember.Route.extend({
   model: function () {
-    return this.store.find('location');
+    return this.modelFor('playces');
   }
 });
 
 App.PlaycesNewRoute = Ember.Route.extend({
-  model: function () {
-    return this.store.find('location');
+  setupController: function (controller, model) {
+    controller.set('content', {});
   }
 });
 
@@ -56,7 +50,7 @@ App.PlayceController = Ember.ObjectController.extend({
   }
 });
 
-App.PlaycesNewController = Ember.ArrayController.extend({
+App.PlaycesNewController = Ember.ObjectController.extend({
   actions: {
     getCoordinates: function () {
       var self = this;
@@ -79,12 +73,10 @@ App.PlaycesNewController = Ember.ArrayController.extend({
 
       newLocation.save();
       this.transitionToRoute('playces');
-
     }
   },
 
   isGettingCoordinates: false,
-
   isSaveable: false,
   isNotSaveable: function () {
     return !this.get('isSaveable');
@@ -111,7 +103,7 @@ App.MapView = Ember.View.extend({
   classNames: ['map-container'],
   didInsertElement: function () {
     var mapOptions = {
-      zoom: 15,
+      zoom: 10,
       center: new google.maps.LatLng(42.366604, -71.208291),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     },
@@ -137,7 +129,7 @@ App.MapView = Ember.View.extend({
 Ember.TEMPLATES["application"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
@@ -150,12 +142,25 @@ function program1(depth0,data) {
     'class': ("logo")
   },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "playces", options) : helperMissing.call(depth0, "link-to", "playces", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n  </div>\n</header>\n\n");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.MapView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("\n\n<div class=\"container\">\n  ");
+  data.buffer.push("\n  </div>\n</header>\n\n<div class=\"container\">\n  ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>\n");
+  return buffer;
+  
+});
+
+Ember.TEMPLATES["playces"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.MapView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n\n");
+  stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n");
   return buffer;
   
 });
@@ -210,17 +215,15 @@ function program3(depth0,data) {
 Ember.TEMPLATES["playces/new"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
   
-  data.buffer.push("&laquo; Back");
+  data.buffer.push("Cancel");
   }
 
-  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "playces", options) : helperMissing.call(depth0, "link-to", "playces", options));
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n<h2>Add New Playce</h2>\n\n<div class=\"form-group span8\">\n  ");
+  data.buffer.push("<h2>Add New Playce</h2>\n\n<div class=\"form-group span8\">\n  ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'type': ("text"),
     'placeholder': ("Playce Name"),
@@ -252,7 +255,10 @@ function program1(depth0,data) {
   },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveLocation", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Save Location</button>\n</div>\n");
+  data.buffer.push(">Save Location</button>\n  ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "playces", options) : helperMissing.call(depth0, "link-to", "playces", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n</div>\n");
   return buffer;
   
 });
