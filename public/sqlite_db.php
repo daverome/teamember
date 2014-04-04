@@ -15,9 +15,19 @@ function createTable() {
     modified TEXT DEFAULT NULL)");
 }
 
+function filterInput( $input ) {
+    if( $input ) {
+        $input = strip_tags( $input );
+        return $input;
+    }
+}
 
 function createLocation( $name, $latitude, $longitude ) {
     global $dbh;
+
+    $name       = filterInput( $name );
+    $latitude   = filterInput( $latitude );
+    $longitude  = filterInput( $longitude );
 
     $stmt = $dbh->prepare("INSERT INTO locations VALUES(null, :name, :latitude, :longitude, :added, null)");
     $stmt->bindParam( ':name', $name );
@@ -43,6 +53,12 @@ function readLocation( $id=null ) {
 
 function updateLocation( $name, $latitude, $longitude, $id ) {
     global $dbh;
+
+    $name       = filterInput( $name );
+    $latitude   = filterInput( $latitude );
+    $longitude  = filterInput( $longitude );
+    $id         = filterInput( $id );
+
 
     $stmt = $dbh->prepare("UPDATE locations SET name=:name, latitude=:latitude, longitude=:longitude, modified=:modified WHERE id=:id");
     $stmt->bindParam( ':name', $name );
