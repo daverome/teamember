@@ -1,5 +1,7 @@
 .app-header {
   background: #fff;
+  box-shadow: 0 1px 1px rgba(#000, 0.05);
+  margin: 0 0 $page-v-rhythm;
   padding: 10px 0;
 
   .logo {

@@ -7,6 +7,7 @@ App = Ember.Application.create({
 //***************************************************************************
 App.Router.map(function () {
   this.resource('playces', { path: '/' }, function () {
+    this.resource('playce', { path: 'playces/:playce_id' });
     this.route('new');
   });
 });
@@ -32,8 +33,6 @@ App.PlaycesNewRoute = Ember.Route.extend({
 //***************************************************************************
 // Controllers
 //***************************************************************************
-// App.ApplicationControler = Ember.Controller.extend({});
-
 App.PlayceController = Ember.ObjectController.extend({
   actions: {
     remove: function () {
@@ -101,6 +100,7 @@ App.Location = DS.Model.extend({
 
 App.MapView = Ember.View.extend({
   classNames: ['map-container'],
+
   didInsertElement: function () {
     var mapOptions = {
       zoom: 10,
@@ -110,19 +110,42 @@ App.MapView = Ember.View.extend({
     bounds = new google.maps.LatLngBounds();
 
     googleMapsMap = new google.maps.Map(this.$()[0], mapOptions);
+    this.get('controller').set('googleMapsMap', googleMapsMap);
+    this.get('controller').set('googleMapsBounds', bounds);
+  }
+});
 
-    this.get('controller').get('model').get('content').forEach(function (item) {
-      latlng =  new google.maps.LatLng(item.get('latitude'), item.get('longitude'));
+App.MarkerView = Ember.View.extend({
+  didInsertElement: function () {
+    var map = this.get('controller').get('googleMapsMap'),
+    bounds = this.get('controller').get('googleMapsBounds'),
+    context = this.get('context'),
+    marker,
+    infoWindow,
+    latlng = new google.maps.LatLng(context.get('latitude'), context.get('longitude'));
 
-      marker = new google.maps.Marker({
-        animation: google.maps.Animation.DROP,
-        map: googleMapsMap,
-        position: latlng
-      });
-      bounds.extend(latlng);
+    marker = new google.maps.Marker({
+      animation: google.maps.Animation.DROP,
+      map: map,
+      position: latlng
     });
 
-    googleMapsMap.fitBounds(bounds);
+    infoWindow = new google.maps.InfoWindow({
+      content: context.get('name') + '<br>(' + context.get('latitude') + ', ' + context.get('longitude') + ')'
+    });
+
+    this.set('googleMapsMarker', marker);
+
+    google.maps.event.addListener(marker, 'click', function () {
+      infoWindow.open(map, marker);
+    });
+
+    bounds.extend(latlng);
+    map.fitBounds(bounds);
+  },
+
+  willDestroyElement: function () {
+    this.get('googleMapsMarker').setMap(null);
   }
 });
 
@@ -150,13 +173,51 @@ function program1(depth0,data) {
   
 });
 
+Ember.TEMPLATES["playce"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
+
+function program1(depth0,data) {
+  
+  
+  data.buffer.push("&laquo; Back");
+  }
+
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "playces", options) : helperMissing.call(depth0, "link-to", "playces", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n<h2>");
+  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</h2>\n\n<p>\n  <strong>Latitude:</strong> ");
+  stack1 = helpers._triageMustache.call(depth0, "latitude", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("<br>\n  <strong>Longitude:</strong> ");
+  stack1 = helpers._triageMustache.call(depth0, "longitude", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n</p>\n");
+  return buffer;
+  
+});
+
 Ember.TEMPLATES["playces"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, escapeExpression=this.escapeExpression;
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
 
+function program1(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\n  ");
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.MarkerView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n");
+  return buffer;
+  }
 
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "App.MapView", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("\n\n");
+  stack1 = helpers.each.call(depth0, {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[],types:[],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n\n");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -168,7 +229,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 Ember.TEMPLATES["playces/index"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 function program1(depth0,data) {
   
@@ -178,9 +239,9 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
-  var buffer = '', stack1;
+  var buffer = '', stack1, helper, options;
   data.buffer.push("\n      <tr>\n        <td>");
-  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0,depth0],types:["STRING","ID"],data:data},helper ? helper.call(depth0, "playce", "", options) : helperMissing.call(depth0, "link-to", "playce", "", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("</td>\n        <td>");
   stack1 = helpers._triageMustache.call(depth0, "latitude", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
@@ -192,6 +253,28 @@ function program3(depth0,data) {
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "remove", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">Delete</a></td>\n      </tr>\n      ");
   return buffer;
+  }
+function program4(depth0,data) {
+  
+  var stack1;
+  stack1 = helpers._triageMustache.call(depth0, "name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  else { data.buffer.push(''); }
+  }
+
+function program6(depth0,data) {
+  
+  var buffer = '', stack1, helper, options;
+  data.buffer.push("\n      <tr>\n        <td colspan=\"4\">\n          <em>No places yet.</em> ");
+  stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "playces.new", options) : helperMissing.call(depth0, "link-to", "playces.new", options));
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n        </td>\n      </tr>\n      ");
+  return buffer;
+  }
+function program7(depth0,data) {
+  
+  
+  data.buffer.push("Add a new playce.");
   }
 
   data.buffer.push("<h2>Playces (");
@@ -205,7 +288,7 @@ function program3(depth0,data) {
   data.buffer.push("\n\n<div class=\"table-container\">\n  <table>\n    <thead>\n      <tr>\n        <th>Name</th>\n        <th>Latitude</th>\n        <th>Longitude</th>\n        <th></th>\n      </tr>\n    </thead>\n    <tbody>\n      ");
   stack1 = helpers.each.call(depth0, {hash:{
     'itemController': ("playce")
-  },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(3, program3, data),contexts:[],types:[],data:data});
+  },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.program(6, program6, data),fn:self.program(3, program3, data),contexts:[],types:[],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    </tbody>\n  </table>\n</div>\n");
   return buffer;
@@ -249,16 +332,16 @@ function program1(depth0,data) {
   },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "getCoordinates", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Get My Coordinates</button>\n  </div>\n</div>\n\n<div class=\"form-group\">\n  <button class=\"button\" ");
+  data.buffer.push(">Get My Coordinates</button>\n  </div>\n</div>\n\n<div class=\"form-group\">\n  <ul class=\"list-inline\">\n    <li><button class=\"button\" ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'disabled': ("isNotSaveable")
   },hashTypes:{'disabled': "ID"},hashContexts:{'disabled': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveLocation", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push(">Save Location</button>\n  ");
+  data.buffer.push(">Save Location</button></li>\n    <li>");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "playces", options) : helperMissing.call(depth0, "link-to", "playces", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n</div>\n");
+  data.buffer.push("</li>\n  </ul>\n</div>\n");
   return buffer;
   
 });

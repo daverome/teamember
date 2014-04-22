@@ -279,6 +279,8 @@ body {
   font: normal 100%/1.4 "Open Sans", "Helvetica Neue", "Arial", sans-serif;
   color: #555555;
   -webkit-font-smoothing: antialiased; }
+  body > .ember-view {
+    padding-bottom: 20px; }
 
 .container {
   margin: auto;
@@ -299,6 +301,8 @@ hr {
 
 .app-header {
   background: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  margin: 0 0 20px;
   padding: 10px 0; }
   .app-header .logo {
     font-size: 28px;
@@ -526,9 +530,25 @@ textarea {
 select {
   width: 100%; }
 
+.list-inline {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0; }
+  .list-inline > li {
+    display: inline-block;
+    vertical-align: baseline;
+    zoom: 1;
+    *display: inline;
+    *vertical-align: auto;
+    margin-left: 20px;
+    margin-top: 0;
+    vertical-align: middle; }
+    .list-inline > li:first-child {
+      margin-left: 0; }
+
 .table-container {
   margin-top: 20px;
-  border-bottom: 2px solid #eee; }
+  border-bottom: 2px solid #f1f2f3; }
   .table-container:first-child {
     margin-top: 0; }
 
@@ -541,7 +561,7 @@ table {
     margin-top: 0; }
 
 thead th {
-  background: #eee; }
+  background: #f1f2f3; }
 
 tbody th,
 tbody td {

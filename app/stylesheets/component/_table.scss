@@ -1,6 +1,6 @@
 .table-container {
   @include vertical-rhythm;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid $gray-light;
 }
 
 table {
@@ -12,7 +12,7 @@ table {
 
 thead {
   th {
-    background: #eee;
+    background: $gray-light;
   }
 }
 

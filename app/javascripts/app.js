@@ -7,6 +7,7 @@ App = Ember.Application.create({
 //***************************************************************************
 App.Router.map(function () {
   this.resource('playces', { path: '/' }, function () {
+    this.resource('playce', { path: 'playces/:playce_id' });
     this.route('new');
   });
 });
@@ -32,8 +33,6 @@ App.PlaycesNewRoute = Ember.Route.extend({
 //***************************************************************************
 // Controllers
 //***************************************************************************
-// App.ApplicationControler = Ember.Controller.extend({});
-
 App.PlayceController = Ember.ObjectController.extend({
   actions: {
     remove: function () {
@@ -101,6 +100,7 @@ App.Location = DS.Model.extend({
 
 App.MapView = Ember.View.extend({
   classNames: ['map-container'],
+
   didInsertElement: function () {
     var mapOptions = {
       zoom: 10,
@@ -110,18 +110,41 @@ App.MapView = Ember.View.extend({
     bounds = new google.maps.LatLngBounds();
 
     googleMapsMap = new google.maps.Map(this.$()[0], mapOptions);
+    this.get('controller').set('googleMapsMap', googleMapsMap);
+    this.get('controller').set('googleMapsBounds', bounds);
+  }
+});
 
-    this.get('controller').get('model').get('content').forEach(function (item) {
-      latlng =  new google.maps.LatLng(item.get('latitude'), item.get('longitude'));
+App.MarkerView = Ember.View.extend({
+  didInsertElement: function () {
+    var map = this.get('controller').get('googleMapsMap'),
+    bounds = this.get('controller').get('googleMapsBounds'),
+    context = this.get('context'),
+    marker,
+    infoWindow,
+    latlng = new google.maps.LatLng(context.get('latitude'), context.get('longitude'));
 
-      marker = new google.maps.Marker({
-        animation: google.maps.Animation.DROP,
-        map: googleMapsMap,
-        position: latlng
-      });
-      bounds.extend(latlng);
+    marker = new google.maps.Marker({
+      animation: google.maps.Animation.DROP,
+      map: map,
+      position: latlng
     });
 
-    googleMapsMap.fitBounds(bounds);
+    infoWindow = new google.maps.InfoWindow({
+      content: context.get('name') + '<br>(' + context.get('latitude') + ', ' + context.get('longitude') + ')'
+    });
+
+    this.set('googleMapsMarker', marker);
+
+    google.maps.event.addListener(marker, 'click', function () {
+      infoWindow.open(map, marker);
+    });
+
+    bounds.extend(latlng);
+    map.fitBounds(bounds);
+  },
+
+  willDestroyElement: function () {
+    this.get('googleMapsMarker').setMap(null);
   }
 });

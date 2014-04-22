@@ -17,6 +17,8 @@
 </div>
 
 <div class="form-group">
-  <button class="button" {{bind-attr disabled=isNotSaveable}} {{action 'saveLocation'}}>Save Location</button>
-  {{#link-to 'playces'}}Cancel{{/link-to}}
+  <ul class="list-inline">
+    <li><button class="button" {{bind-attr disabled=isNotSaveable}} {{action 'saveLocation'}}>Save Location</button></li>
+    <li>{{#link-to 'playces'}}Cancel{{/link-to}}</li>
+  </ul>
 </div>

@@ -15,10 +15,16 @@
     <tbody>
       {{#each itemController="playce"}}
       <tr>
-        <td>{{name}}</td>
+        <td>{{#link-to 'playce' this}}{{name}}{{/link-to}}</td>
         <td>{{latitude}}</td>
         <td>{{longitude}}</td>
         <td><a href="#" {{action 'remove'}}>Delete</a></td>
+      </tr>
+      {{else}}
+      <tr>
+        <td colspan="4">
+          <em>No places yet.</em> {{#link-to 'playces.new'}}Add a new playce.{{/link-to}}
+        </td>
       </tr>
       {{/each}}
     </tbody>

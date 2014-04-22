@@ -1,0 +1,14 @@
+.list-inline {
+  @include list-clean;
+
+  > li {
+    @include inline-block;
+    margin-left: 20px;
+    margin-top: 0;
+    vertical-align: middle;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
